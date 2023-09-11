@@ -62,6 +62,6 @@ export class HomeComponent implements OnInit {
   }
   
   generateBracket() {
-    this.tournamentService.generateBracket(this.players, this.bracketType);
+    this.tournamentService.determineGame(this.players, this.bracketType);
   }
 }

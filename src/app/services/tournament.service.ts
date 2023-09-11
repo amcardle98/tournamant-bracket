@@ -1,15 +1,23 @@
 import { Injectable } from '@angular/core';
 import { single } from 'rxjs';
 import { Player } from '../models/player';
+import * as logic  from '../helper/tournament';
+import { BracketNode } from '../models/bracketNode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TournamentService {
+  numberOfMatches!: number;
+  numberOfRounds!: number;
+  numberOfByes!: number;
+  numberOfPlayers!: number;
+
+  bracket!: BracketNode;
 
   constructor() { }
 
-  generateBracket(players: Player[], bracketType: string) {
+  determineGame(players: Player[], bracketType: string) {
     const shuffledPlayers = this.shufflePlayers(players);
     
     switch(bracketType) {
@@ -50,11 +58,13 @@ export class TournamentService {
   }
 
   singleElimination(players: Player[]) {
-    const numberOfPlayers = players.length; // 8 
-    const numberOfRounds = Math.log2(numberOfPlayers); // 3
-    const numberOfMatches = numberOfPlayers - 1; // 7
-    const numberOfByes = numberOfMatches - numberOfPlayers; // 0
+    this.numberOfPlayers = players.length; // 8 
+    this.numberOfRounds = Math.ceil(Math.log2(this.numberOfPlayers)); // 3
+    this.numberOfMatches = this.numberOfPlayers - 1; // 7 
+    this.numberOfByes = logic.calculateByeSingleElimination(this.numberOfPlayers); // 0
 
+    this.bracket = this.generateBracket(players);
+    console.log(this.bracket);
   }
 
   doubleElimination(players: Player[]) {
@@ -63,6 +73,26 @@ export class TournamentService {
 
   roundRobin(players: Player[]) {
     throw new Error('Not implemented yet');
+  }
+
+  generateBracket(players: Player[]): BracketNode {
+    if (players.length === 0) {
+      throw new Error('No participants');
+    }
+  
+    if (players.length === 1) {
+      return new BracketNode(players[0]);
+    }
+  
+    if (players.length === 2) {
+      return new BracketNode(players[0], players[1]);
+    }
+  
+    const mid = Math.ceil(players.length / 2);
+    const leftBracket = this.generateBracket(players.slice(0, mid));
+    const rightBracket = this.generateBracket(players.slice(mid));
+  
+    return new BracketNode(null, null, leftBracket, rightBracket);
   }
 
 
