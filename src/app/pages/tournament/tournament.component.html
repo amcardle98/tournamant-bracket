@@ -1,0 +1,9 @@
+<div class="tournament-page">
+    <h1>Tournament Bracket</h1>
+    <ng-container *ngIf="bracket$ | async as bracket">
+      <app-bracket [bracket]="bracket"></app-bracket>
+    </ng-container>
+  </div>
+
+
+<!-- <pre>{{bracket$ | async | json}}</pre> -->

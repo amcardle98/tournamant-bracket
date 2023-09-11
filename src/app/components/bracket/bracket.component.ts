@@ -8,28 +8,9 @@ import { BracketNode } from 'src/app/models/bracketNode';
   styleUrls: ['./bracket.component.scss']
 })
 export class BracketComponent {
-  /**
-   * This will be one single bracket component which will contain 2 players 
-   * My idea is to have something like
-   *  
-   * <Bracket [matchPlayers]="players*2"></bracket> 
-   * 
-   * Where it takes in 2 players passed in from the parent component
-   * the parent component will contain a shuffled list of players.
-   * Im not sure if the best option is to just pass in the first 2 players or select 2 randomly 
-   * since the list will already be shuffled.
-   * 
-   */
-
-  @Input() root!: BracketNode;
-  @Input() matchPlayers: Player[] = [];
+  @Input() bracket!: BracketNode | null;
 
   constructor() { }
-
-  selectWinner(winner: Player) {
-    this.root.winner = winner;
-  }
-
 
 
 }
