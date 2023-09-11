@@ -1,13 +1,12 @@
-<div class="bracket">
-    <ng-container *ngIf="root">
-        <div class="match">
-            <div>{{ root.player1 }}</div>
-            <button (click)="selectWinner(root.player1!)"></button>
-            <div>{{ root.winner }}</div>
-            <button (click)="selectWinner(root.player2!)"></button>
-            <div>{{ root.player2 }}</div>
-          </div>
-          <app-bracket [root]?="root.left"></app-bracket>
-          <app-bracket [root]?="root.right"></app-bracket>
-    </ng-container>
+<div class="container">
+    <div class="bracket-node">
+        <ng-container *ngIf="bracket">
+          <div class="participant">{{ bracket.player1?.name }}</div>
+          <div class="participant">{{ bracket.player2?.name }}</div>
+          <!-- Optionally, you can display the winner as well -->
+          <div class="winner">{{ bracket.winner?.name }}</div>
+          <app-bracket [bracket]="bracket.left"></app-bracket>
+          <app-bracket [bracket]="bracket.right"></app-bracket>
+        </ng-container>
+      </div>
 </div>
