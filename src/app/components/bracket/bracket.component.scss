@@ -1,0 +1,30 @@
+.bracket {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: 20px 0 20px 10px; //spacing between matches
+}
+
+.bracket-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(231, 231, 231);
+    margin: 10px;
+    padding: 10px 20px;
+
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .name {
+        margin: 0 50px;
+        font-size: 20px;
+    }
+    
+    .score {
+        margin: 0 10px;
+        font-size: 20px;
+    }
+}

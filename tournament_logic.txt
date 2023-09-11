@@ -1,0 +1,25 @@
+Tournament types to implement
++    // 1. Single elimination
++    // 2. Double elimination
++    // 3. Round robin
+
+1. Single elimination
+    he single elimination tournament is a quick and efficient method of determining the winner, 
+    however, it does not promote participation, “you lose, you’re out.” However, if you are looking 
+    for a quick tournament in your class the single elimination would definitely work. To determine 
+    the number of matches, subtract one from the total number of participants. 
+    For example if you have 8 participants/teams taking part, simply 8-1=7, 
+    therefore there will be 7 total matches to determine a champion. 
+    But, if you want to determine third and fourth, you will need to have one more match or 8 total matches.
+
+    If you want to determine the number of rounds, determine the number of times 2 can be multiplied by 
+    itself to reach a number equal to or exceeding the total number of participants/teams. 
+    For example to determine the number of rounds for 16 participants/teams, 2 must be raised to the 4th power (2x2x2x2). 
+    Therefore, there would be 4 rounds to determine a champion and runner-up.
+
+    Once you have the number of participants/teams determined, the brackets can be made for the tournament draw. 
+    If you have a perfect power of 2, such as the example above, 16 participants/teams, the brackets are easy to make.
+    If it is not a perfect power of 2, the brackets must be manipulated so that after the first 
+    round some participants/teams are eliminated, therefore, the second round will equal a perfect power of 2.
+
+To determine the number of byes that must take place if there is not a perfect power of 2, subtract the number of participants/teams from the next higher perfect power of 2 than the given number of participants/teams. For example, if there are 9 participants/teams, the next higher power on 2 is 16, so 16-9=7, which is the number of byes (7) that are needed in the first round of a nine participant/team single elimination tournament. When you create this draw, you only have 2 participants/teams participating; everyone else will get a bye to round 2. Therefore, in round 2, eight participants/teams will move through which are a perfect power of 2 (2x2x2). Byes should only ¨ be placed in the first round.
