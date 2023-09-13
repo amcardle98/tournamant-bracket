@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { Player } from 'src/app/models/player';
+import { Component, Input, OnInit } from '@angular/core';
 import { BracketNode } from 'src/app/models/bracketNode';
 
 @Component({
@@ -7,10 +6,17 @@ import { BracketNode } from 'src/app/models/bracketNode';
   templateUrl: './bracket.component.html',
   styleUrls: ['./bracket.component.scss']
 })
-export class BracketComponent {
+export class BracketComponent implements OnInit {
   @Input() bracket!: BracketNode | null;
+  @Input() round! : number;
 
-  constructor() { }
+  constructor() {
+   }
+
+  ngOnInit(): void {
+  }
+
+  
 
 
 }

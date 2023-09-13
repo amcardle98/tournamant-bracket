@@ -1,24 +1,13 @@
-.bracket-node {
+.bracket {
   display: flex;
-  flex-direction: row;
-  width: 100px;
-  height: 100px;
+  flex-direction: column; 
   border: 1px solid black;
-  border-radius: 50%;
-  margin: 10px;
-  background-color: #fff;
-  color: #000;
-  font-size: 1.5rem;
-  font-weight: bold;
-  cursor: pointer;
-}
+  
+  
+  .bracket-player {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: auto;
-  margin: 20px;
+  }
 }

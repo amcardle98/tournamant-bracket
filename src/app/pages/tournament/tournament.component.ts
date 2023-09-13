@@ -8,17 +8,27 @@ import { TournamentService } from 'src/app/services/tournament.service';
   templateUrl: './tournament.component.html',
   styleUrls: ['./tournament.component.scss'],
 })
-export class TournamentComponent {
+export class TournamentComponent implements OnInit {
   bracket$: Observable<BracketNode>;
+  numberOfRounds: number = 0;
+  numberOfPlayers: number = 0;
+  numberOfMatches: number = 0;
+  numberOfByes: number = 0;
+
+  columnRoundWidth?: string;
 
   constructor(private tournamentService: TournamentService) {
     this.bracket$ = this.tournamentService.bracket$;
+    this.numberOfRounds = this.tournamentService.numberOfRounds;
+    this.numberOfPlayers = this.tournamentService.numberOfPlayers;
+    this.numberOfMatches = this.tournamentService.numberOfMatches;
+    this.numberOfByes = this.tournamentService.numberOfByes;
+
   }
 
   ngOnInit() {
-    this.bracket$.subscribe((bracket) => {
-      console.log(bracket);
-    } );
+    this.columnRoundWidth = `${window.innerWidth / this.numberOfRounds}px`;
+    console.log(this.columnRoundWidth);
   }
 
 }

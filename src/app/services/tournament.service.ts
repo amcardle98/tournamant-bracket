@@ -66,8 +66,6 @@ export class TournamentService {
       this.numberOfPlayers
     ); // 0
 
-    console.log(this.numberOfPlayers);
-
     const bracket = this.generateBracket(players);
     this.bracketSubject.next(bracket);
 
@@ -101,4 +99,21 @@ export class TournamentService {
 
     return new BracketNode(null, null, leftBracket, rightBracket);
   }
+
+  getNumberOfRounds(): number {
+    return this.numberOfRounds;
+  }
+
+  getNumberOfMatches(): number {
+    return this.numberOfMatches;
+  }
+
+  getNumberOfByes(): number {
+    return this.numberOfByes;
+  }
+  
+  getNumberOfPlayers(): number {
+    return this.numberOfPlayers;
+  }
+
 }

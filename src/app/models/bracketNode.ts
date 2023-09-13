@@ -19,4 +19,24 @@ export class BracketNode {
     this.left = left;
     this.right = right;
   }
+
+  isEmpty(): boolean {
+    return ((this.player1 === null && this.player2 === null) && (this.left === null && this.right === null));
+  }
+
+  isLeaf(): boolean {
+    return (this.left === null && this.right === null);
+  }
+
+  setWinner(player: Player): void {
+    this.winner = player;
+  }
+
+  getWinner(): Player | null {
+    return this.winner;
+  }
+
+  hasPlayers(): boolean {
+    return (this.player1 !== null && this.player2 !== null);
+  }
 }

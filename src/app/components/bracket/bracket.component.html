@@ -1,12 +1,4 @@
-<div class="container">
-    <div class="bracket-node">
-        <ng-container *ngIf="bracket">
-          <div class="participant">{{ bracket.player1?.name }}</div>
-          <div class="participant">{{ bracket.player2?.name }}</div>
-          <!-- Optionally, you can display the winner as well -->
-          <div class="winner">{{ bracket.winner?.name }}</div>
-          <app-bracket [bracket]="bracket.left"></app-bracket>
-          <app-bracket [bracket]="bracket.right"></app-bracket>
-        </ng-container>
-      </div>
+<div class="bracket">
+  {{round}}
+  {{bracket}}
 </div>
