@@ -1,22 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { BracketNode } from 'src/app/models/bracketNode';
+import { ImplicitBracketNode } from 'src/app/models/bracket-node';
 
 @Component({
   selector: 'app-bracket',
   templateUrl: './bracket.component.html',
-  styleUrls: ['./bracket.component.scss']
+  styleUrls: ['./bracket.component.scss'],
 })
 export class BracketComponent implements OnInit {
-  @Input() bracket!: BracketNode | null;
-  @Input() round! : number;
+  @Input() bracket: ImplicitBracketNode | null | undefined;
+  @Input() round: number | null | undefined;
 
-  constructor() {
-   }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
-  
-
-
+  ngOnInit(): void {}
 }

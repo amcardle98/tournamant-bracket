@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { BracketNode } from 'src/app/models/bracketNode';
 import { TournamentService } from 'src/app/services/tournament.service';
 
 @Component({
@@ -9,7 +7,7 @@ import { TournamentService } from 'src/app/services/tournament.service';
   styleUrls: ['./tournament.component.scss'],
 })
 export class TournamentComponent implements OnInit {
-  bracket$: Observable<BracketNode>;
+  bracket$ = this.tournamentService.bracket$;
   numberOfRounds: number = 0;
   numberOfPlayers: number = 0;
   numberOfMatches: number = 0;
@@ -17,8 +15,7 @@ export class TournamentComponent implements OnInit {
 
   columnRoundWidth?: string;
 
-  constructor(private tournamentService: TournamentService) {
-    this.bracket$ = this.tournamentService.bracket$;
+  constructor(private readonly tournamentService: TournamentService) {
     this.numberOfRounds = this.tournamentService.numberOfRounds;
     this.numberOfPlayers = this.tournamentService.numberOfPlayers;
     this.numberOfMatches = this.tournamentService.numberOfMatches;
