@@ -1,13 +1,45 @@
 .bracket {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   border: 1px solid black;
-  
-  
+
   .bracket-player {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+  }
+}
 
+.bracket-container {
+  width: fit-content;
+  display: grid;
+  grid-template:
+    "left-player winner-area" 1fr
+    "right-player winner-area" 1fr / auto 200px;
+  gap: 10px;
+
+  align-items: center;
+  justify-content: stretch;
+
+  .player-name {
+    min-width: 200px;
+    border: solid 2px black;
+
+    .tbd-winner {
+      color: #a7a7a7;
+      font-style: italic;
+    }
+  }
+
+  .left-player {
+    grid-area: left-player;
+  }
+
+  .right-player {
+    grid-area: right-player;
+  }
+
+  .winner {
+    grid-area: winner-area;
   }
 }

@@ -4,6 +4,9 @@ import { Player } from '../models/player';
 import * as logic from '../helper/tournament';
 import { ImplicitBracketNode } from '../models/bracket-node';
 import { Router } from '@angular/router';
+import { createBracketContext } from '../helper/generate-bracket-tree';
+import { isNonEmptyArray } from '../types/non-empty-array';
+import { BracketContext } from '../models/bracket-context';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +17,11 @@ export class TournamentService {
   numberOfByes!: number;
   numberOfPlayers!: number;
 
-  private bracketSubject = new BehaviorSubject<ImplicitBracketNode>(
-    new ImplicitBracketNode()
+  private bracketSubject = new BehaviorSubject<ImplicitBracketNode | null>(
+    null
   );
-  bracket$: Observable<ImplicitBracketNode> =
+  
+  bracket$ =
     this.bracketSubject.asObservable();
 
   constructor(private router: Router) {}
@@ -69,8 +73,9 @@ export class TournamentService {
       this.numberOfPlayers
     ); // 0
 
-    const bracket = this.generateBracket(players);
-    this.bracketSubject.next(bracket);
+    const bracketContext = this.generateBracket(players);
+    const topBracket = bracketContext.topBracket;
+    this.bracketSubject.next(topBracket);
 
     this.router.navigate(['/play']);
   }
@@ -83,24 +88,15 @@ export class TournamentService {
     throw new Error('Not implemented yet');
   }
 
-  generateBracket(players: Player[]): ImplicitBracketNode {
-    if (players.length === 0) {
-      this.router.navigate(['/play']);
+  generateBracket(players: Player[]): BracketContext {
+
+    if (!isNonEmptyArray(players)) {
+      throw new Error(`Players must be a non-empty array!`);
     }
+    
+    const bracketContext = createBracketContext(players);
 
-    if (players.length === 1) {
-      return new ImplicitBracketNode(players[0]);
-    }
-
-    if (players.length === 2) {
-      return new ImplicitBracketNode(players[0], players[1]);
-    }
-
-    const mid = Math.ceil(players.length / 2);
-    const leftBracket = this.generateBracket(players.slice(0, mid));
-    const rightBracket = this.generateBracket(players.slice(mid));
-
-    return new ImplicitBracketNode(null, null, leftBracket, rightBracket);
+    return bracketContext;
   }
 
   getNumberOfRounds(): number {

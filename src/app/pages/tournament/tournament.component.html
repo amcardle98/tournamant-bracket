@@ -3,12 +3,10 @@
     <div class="col-12">
       <h1>Tournament Bracket</h1>
       <div class="bracket">
-        <div class="bracket-rounds" [style.width]="columnRoundWidth" *ngFor="let i of [].constructor(numberOfRounds + 1)">
-          <ng-container *ngIf="bracket$ | async as bracket">
-            <!-- Use a recursive component to display the bracket -->
-            <app-bracket [round]="i" [bracket]="bracket"></app-bracket>
-          </ng-container>
-        </div>
+        <ng-container *ngIf="bracket$ | async as bracket">
+          <!-- Use a recursive component to display the bracket -->
+          <app-bracket [round]="1" [bracket]="bracket"></app-bracket>
+        </ng-container>
       </div>
     </div>
   </div>

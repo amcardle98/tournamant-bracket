@@ -1,4 +1,42 @@
-<div class="bracket">
-  {{round}}
-  {{bracket}}
+<!-- 
+  This component represents a single bracket node, and will recursively
+  render all of it's descendant nodes.
+-->
+
+<ng-template #leftPlayerName>
+  <div class="player-name">{{ bracket?.leftPlayer?.name }}</div>
+</ng-template>
+
+<ng-template #rightPlayerName>
+  <div class="player-name">{{ bracket?.rightPlayer?.name }}</div>
+</ng-template>
+
+<ng-template #tbdWinner>
+  <span class="tbd-winner">TBD</span>
+</ng-template>
+
+<div class="bracket-container" *ngIf="bracket">
+  <div class="left-player">
+    <ng-container *ngIf="leftDescendantBracket else leftPlayerName">
+      <app-bracket
+        [bracket]="leftDescendantBracket"
+        [round]="(round ?? 0) + 1"
+      ></app-bracket>
+    </ng-container>
+  </div>
+  <div class="right-player">
+    <ng-container *ngIf="rightDescendantBracket else rightPlayerName">
+      <app-bracket
+        [bracket]="rightDescendantBracket"
+        [round]="(round ?? 0) + 1"
+      ></app-bracket>
+    </ng-container>
+  </div>
+  <div class="winner">
+    <div class="player-name">
+      <ng-container *ngIf="bracket.winner as winner; else tbdWinner">
+        {{ winner.name }}
+      </ng-container>
+    </div>
+  </div>
 </div>

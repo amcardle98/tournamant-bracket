@@ -11,16 +11,15 @@ export interface BracketNode {
 
 /**
  * Represents a bracket node that has child nodes that will fill in the data here.
- * 
+ *
  * The winner of the left node will be the left player, and the winner of the right node
  * will be the right player.
  */
 export class ImplicitBracketNode implements BracketNode {
-
   /** Player 1 is the winner of `bracket1` */
   get leftPlayer() {
     return this.leftBracket?.winner;
-  };
+  }
   get rightPlayer() {
     return this.rightBracket?.winner;
   }
@@ -34,10 +33,7 @@ export class ImplicitBracketNode implements BracketNode {
   leftBracket: BracketNode;
   rightBracket: BracketNode;
 
-  constructor(
-    leftBracket: BracketNode,
-    rightBracket: BracketNode,
-  ) {
+  constructor(leftBracket: BracketNode, rightBracket: BracketNode) {
     this.leftBracket = leftBracket;
     this.rightBracket = rightBracket;
   }
@@ -67,8 +63,7 @@ export class ImplicitBracketNode implements BracketNode {
  * Represents a bracket pairing that has no more children. This is the start of
  * a tournament, or the leaf of the bracket tree.
  */
-export class BottomBracketNode implements BracketNode {
-
+export class LeafBracketNode implements BracketNode {
   leftPlayer?: Player;
   rightPlayer?: Player;
 
@@ -79,7 +74,7 @@ export class BottomBracketNode implements BracketNode {
 
   constructor(
     leftPlayer: Player | undefined | null,
-    rightPlayer: Player | undefined | null,
+    rightPlayer: Player | undefined | null
   ) {
     this.leftPlayer = leftPlayer ?? undefined;
     this.rightPlayer = rightPlayer ?? undefined;
@@ -91,5 +86,4 @@ export class BottomBracketNode implements BracketNode {
   setWinner(player: Player): void {
     this._winner = player;
   }
-
 }
