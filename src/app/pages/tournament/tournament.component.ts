@@ -39,25 +39,28 @@ export class TournamentComponent implements OnInit {
     // apart to create the split, we're not displaying
     // that in the tree on each side.
     const numberOfRoundsDisplayed = useSplitView
-      ? this.numberOfRounds - 1
+      ? this.numberOfRounds
       : this.numberOfRounds;
 
-    // The column round width should be the width of the window
-    // divided by the number of rounds.
-    let columnRoundWidth = window.innerWidth / this.numberOfRounds;
+    const winnerGridGap = 20;
+    const winnerWidth = 200;
 
     const gridGaps = useSplitView
       ? (numberOfRoundsDisplayed - 1) * 2
       : numberOfRoundsDisplayed - 1;
-    const gridGapWidths = gridGaps * 10;
+    const gridGapWidths = gridGaps * 10 + winnerGridGap + winnerWidth;
 
-    columnRoundWidth -= gridGapWidths;
-
+    let remainingWidthForColumns = window.innerWidth - gridGapWidths;
     if (useSplitView) {
-      columnRoundWidth /= 2;
+      remainingWidthForColumns /= 2;
     }
 
+    // The column round width should be the width of the window
+    // divided by the number of rounds.
+    let columnRoundWidth = remainingWidthForColumns / numberOfRoundsDisplayed;
+
     this.columnRoundWidth = `${columnRoundWidth}px`;
+    console.log(window.innerWidth);
     console.log(this.numberOfRounds);
     console.log(this.columnRoundWidth);
   }
