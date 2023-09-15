@@ -10,20 +10,23 @@
   }
 }
 
+$column-round-width: var(--column-round-width, 200px);
+
 .bracket-container {
+  $default-grid-template: "left-player winner-area" 1fr
+    "right-player winner-area" 1fr / auto $column-round-width;
   width: fit-content;
   display: grid;
-  grid-template:
-    "left-player winner-area" 1fr
-    "right-player winner-area" 1fr / auto 200px;
+  grid-template: var(--grid-template, $default-grid-template);
+
   gap: 10px;
 
   align-items: center;
   justify-content: stretch;
-  justify-items: end;
+  justify-items: var(--justify-items, end);
 
   .player-name {
-    min-width: 200px;
+    min-width: $column-round-width;
     padding: 5px;
     box-sizing: border-box;
     border: solid 2px black;
