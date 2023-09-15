@@ -24,9 +24,27 @@
 
   .player-name {
     min-width: 200px;
+    padding: 5px;
+    box-sizing: border-box;
     border: solid 2px black;
 
+    transition: 0.3s;
+
+    &.selectable {
+      cursor: pointer;
+      &:hover {
+        background-color: #e6e6e6;
+        border-color: #a7a7a7;
+      }
+    }
+
     .tbd-winner {
+      color: #a7a7a7;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .no-player {
       color: #a7a7a7;
       font-style: italic;
     }

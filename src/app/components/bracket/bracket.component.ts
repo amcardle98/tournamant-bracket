@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { LeafBracketNode, BracketNode, ImplicitBracketNode } from 'src/app/models/bracket-node';
+import { LeafBracketNode, BracketNode, ImplicitBracketNode, ByeBracketNode } from 'src/app/models/bracket-node';
 
 @Component({
   selector: 'app-bracket',
@@ -13,6 +13,8 @@ export class BracketComponent implements OnInit, OnChanges {
   leftDescendantBracket?: BracketNode;
   rightDescendantBracket?: BracketNode;
 
+  isByeRound: boolean = false;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -23,6 +25,8 @@ export class BracketComponent implements OnInit, OnChanges {
     if (this.bracket instanceof ImplicitBracketNode) {
       this.leftDescendantBracket = this.bracket.leftBracket;
       this.rightDescendantBracket = this.bracket.rightBracket;
+    } else if (this.bracket instanceof ByeBracketNode) {
+      this.isByeRound = true;
     }
   }
   

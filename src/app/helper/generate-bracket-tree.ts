@@ -3,6 +3,7 @@ import {
   LeafBracketNode,
   BracketNode,
   ImplicitBracketNode,
+  ByeBracketNode,
 } from '../models/bracket-node';
 import { Player } from '../models/player';
 import { NonEmptyArray, isNonEmptyArray } from '../types/non-empty-array';
@@ -11,7 +12,7 @@ export function createBracketTreeFromPlayers(
   players: NonEmptyArray<Player>
 ): BracketNode {
   if (players.length === 1) {
-    return new LeafBracketNode(players[0], undefined);
+    return new ByeBracketNode(players[0]);
   }
 
   if (players.length === 2) {

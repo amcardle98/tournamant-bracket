@@ -87,3 +87,17 @@ export class LeafBracketNode implements BracketNode {
     this._winner = player;
   }
 }
+
+export class ByeBracketNode extends LeafBracketNode {
+  override rightPlayer: undefined = undefined;
+
+//HEYADADAADAADAAM
+
+  override get winner() {
+    return this.leftPlayer;
+  }
+
+  constructor(leftPlayer: Player) {
+    super(leftPlayer, undefined);
+  }
+}
