@@ -1,4 +1,6 @@
-function shuffle(array: Player[]) {
+import { Player } from '../../interfaces';
+
+export function shuffle(array: Player[]) {
   var copy = [],
     n = array.length,
     i;

@@ -1,5 +1,6 @@
+@if(players$ | async) {
 <div class="player-table">
-  <table mat-table [dataSource]="dataSource" aria-label="List of players">
+  <table mat-table [dataSource]="players$" aria-label="List of players">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell *matCellDef="let player">{{ player.name }}</td>
@@ -18,3 +19,4 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 </div>
+}

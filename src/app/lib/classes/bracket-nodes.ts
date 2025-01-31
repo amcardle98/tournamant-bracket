@@ -1,15 +1,6 @@
-interface Player {
-  name: string;
-  id: string;
-}
+import { Player, ITournamentNode } from '../interfaces';
 
-interface ITournamentNode {
-  nodeLeft: ITournamentNode | null;
-  nodeRight: ITournamentNode | null;
-  winner: Player | null;
-}
-
-class MatchNode implements ITournamentNode {
+export class MatchNode implements ITournamentNode {
   private _winner: Player | null = null;
 
   public readonly nodeLeft: ITournamentNode | null = null;
@@ -40,7 +31,7 @@ class MatchNode implements ITournamentNode {
   }
 }
 
-class PlayerNode implements ITournamentNode {
+export class PlayerNode implements ITournamentNode {
   public readonly nodeLeft: ITournamentNode | null = null;
   public readonly nodeRight: ITournamentNode | null = null;
 

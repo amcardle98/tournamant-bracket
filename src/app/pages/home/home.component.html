@@ -45,23 +45,23 @@
           mat-button
           color="warn"
           (click)="removeAll()"
-          [disabled]="players.length === 0"
+          [disabled]="numberOfPlayers < 2"
         >
           Remove all
         </button>
       </div>
 
       <!-- Players Table -->
-      <app-player-list [dataSource]="players"></app-player-list>
+      <app-player-list></app-player-list>
 
       <!-- Generate Bracket Button -->
       <div class="generate-button">
         <button
           mat-raised-button
           color="primary"
-          *ngIf="canStartTournament"
+          *ngIf="numberOfPlayers >= 2"
           (click)="generateTournament()"
-          [disabled]="players.length < 2"
+          [disabled]="numberOfPlayers < 2"
           aria-label="Generate bracket"
         >
           Generate Bracket
