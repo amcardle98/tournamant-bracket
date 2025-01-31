@@ -1,15 +1,42 @@
+<!-- <ng-template #splitTree>
+  <ng-container *ngIf="bracket$ | async as bracket">
+    <ng-container *ngIf="isImplicitBracketNode(bracket)">
+      <div class="split-tree">
+        <div class="left-tree">
+          <app-bracket
+            [round]="numberOfRounds"
+            [bracket]="bracket.leftBracket"
+          ></app-bracket>
+        </div>
+        <span class="winner">{{ bracket.winner ?? "TBD" }}</span>
+        <div class="right-tree">
+          <app-bracket
+            [round]="numberOfRounds"
+            [bracket]="bracket.rightBracket"
+          ></app-bracket>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #singleTree>
+  <app-bracket
+    [round]="numberOfRounds"
+    [bracket]="bracket$ | async"
+  ></app-bracket>
+</ng-template>
+
 <div class="container">
   <div class="row">
     <div class="col-12">
       <h1>Tournament Bracket</h1>
       <div class="bracket">
-        <div class="bracket-rounds" [style.width]="columnRoundWidth" *ngFor="let i of [].constructor(numberOfRounds + 1)">
-          <ng-container *ngIf="bracket$ | async as bracket">
-            <!-- Use a recursive component to display the bracket -->
-            <app-bracket [round]="i" [bracket]="bracket"></app-bracket>
-          </ng-container>
-        </div>
+        <ng-container
+          *ngIf="numberOfPlayers <= 8; then singleTree; else splitTree"
+        >
+        </ng-container>
       </div>
     </div>
   </div>
-</div>
+</div> -->
