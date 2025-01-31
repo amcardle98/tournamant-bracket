@@ -1,39 +1,63 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, single } from 'rxjs';
-import { Player } from '../models/player';
-import * as logic from '../../helper/tournament';
-import { ImplicitBracketNode } from '../../models/bracket-node';
 import { Router } from '@angular/router';
-import { createBracketContext } from '../../helper/generate-bracket-tree';
-import { isNonEmptyArray } from '../../types/non-empty-array';
-import { BracketContext } from '../../models/bracket-context';
+import { Player } from '../interfaces';
+import { tournamentUtils } from '../utils/tournament/tournament.utils';
 
+import { MatchNode, PlayerNode } from '../classes/bracket-nodes';
 @Injectable({
   providedIn: 'root',
 })
 export class TournamentService {
-  numberOfMatches!: number;
-  numberOfRounds!: number;
-  numberOfByes!: number;
-  numberOfPlayers!: number;
-
-  private bracketSubject = new BehaviorSubject<ImplicitBracketNode | null>(
-    null
-  );
-
-  bracket$ = this.bracketSubject.asObservable();
+  private playersSubject = new BehaviorSubject<Player[]>([]);
+  players$: Observable<Player[]> = this.playersSubject.asObservable();
+  bracketTree: any;
 
   constructor(private router: Router) {}
 
-  generateBracket(players: Player[]): void {
-    if (!isNonEmptyArray(players)) {
-      throw new Error(`Players must be a non-empty array!`);
-    }
+  addPlayer(player: Player) {
+    this.playersSubject.next([...this.playersSubject.value, player]);
+  }
 
-    const bracketContext = createBracketContext(players);
+  removePlayer(player: Player) {
+    const newPlayers = this.playersSubject.value.filter(
+      (p) => p.name !== player.name
+    );
+    this.playersSubject.next(newPlayers);
+  }
 
-    console.log(bracketContext);
+  removeAllPlayers() {
+    this.playersSubject.next([]);
+  }
+
+  generateTournament() {
+    const players = this.playersSubject.value;
+    const bracketType = 'single';
+    const bracketSeed = 'random';
+
+    this.bracketTree = buildBrcketTree(players, bracketType);
+    this.router.navigate(['/play']);
   }
 }
 
-function buildBracketTree(players: Player[]): void {}
+function buildBrcketTree(players: Player[], bracketType: string) {
+  const shuffledPlayers = tournamentUtils.shuffle(players);
+
+  // perfect bracket (2^n players)
+  const isBracketPerfect =
+    shuffledPlayers.length ===
+    Math.pow(2, Math.ceil(Math.log2(shuffledPlayers.length)));
+
+  let currentNodes = shuffledPlayers.map((player) => new PlayerNode(player));
+
+  //first iteration builds the first level of the bracket, which in in a case a 4 players, it is 4 player nodes, with 2 matche nodes
+  while (currentNodes.length > 1) {
+    const nextNodes = [];
+    for (let i = 0; i < currentNodes.length; i += 2) {
+      nextNodes.push(new MatchNode(currentNodes[i], currentNodes[i + 1]));
+    }
+    currentNodes = nextNodes;
+  }
+
+  return currentNodes;
+}
