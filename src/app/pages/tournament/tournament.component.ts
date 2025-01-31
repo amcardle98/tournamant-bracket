@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ImplicitBracketNode } from 'src/app/models/bracket-node';
-import { TournamentService } from 'src/app/services/tournament.service';
+import { TournamentService } from 'src/app/lib/services/tournament.service';
 
 function isImplicitBracketNode(
   bracketNode: any
@@ -12,6 +12,7 @@ function isImplicitBracketNode(
   selector: 'app-tournament',
   templateUrl: './tournament.component.html',
   styleUrls: ['./tournament.component.scss'],
+  standalone: false,
 })
 export class TournamentComponent implements OnInit {
   @HostBinding('style.--column-round-width')
@@ -57,7 +58,9 @@ export class TournamentComponent implements OnInit {
 
     // The column round width should be the width of the window
     // divided by the number of rounds.
-    let columnRoundWidth = remainingWidthForColumns / numberOfRoundsDisplayed;
+    let columnRoundWidth =
+      remainingWidthForColumns /
+      (useSplitView ? numberOfRoundsDisplayed : numberOfRoundsDisplayed + 1);
 
     this.columnRoundWidth = `${columnRoundWidth}px`;
     console.log(window.innerWidth);

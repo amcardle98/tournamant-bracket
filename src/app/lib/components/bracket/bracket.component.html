@@ -1,4 +1,4 @@
-<!-- 
+<!--
   This component represents a single bracket node, and will recursively
   render all of it's descendant nodes.
 -->
@@ -8,7 +8,7 @@
 </ng-template>
 
 <ng-template #playerDisplay let-player="player">
-  <div class="player-name" [ngClass]="{selectable: !!player}">
+  <div class="player-name" [ngClass]="{ selectable: !!player }">
     <ng-container *ngIf="player; else noPlayer">
       {{ player.name }}
     </ng-container>
@@ -16,11 +16,17 @@
 </ng-template>
 
 <ng-template #leftPlayerName>
-  <ng-container [ngTemplateOutlet]="playerDisplay" [ngTemplateOutletContext]="{player: bracket?.leftPlayer}"></ng-container>
+  <ng-container
+    [ngTemplateOutlet]="playerDisplay"
+    [ngTemplateOutletContext]="{ player: bracket?.leftPlayer }"
+  ></ng-container>
 </ng-template>
 
 <ng-template #rightPlayerName>
-  <ng-container [ngTemplateOutlet]="playerDisplay" [ngTemplateOutletContext]="{player: bracket?.rightPlayer}"></ng-container>
+  <ng-container
+    [ngTemplateOutlet]="playerDisplay"
+    [ngTemplateOutletContext]="{ player: bracket?.rightPlayer }"
+  ></ng-container>
 </ng-template>
 
 <ng-template #tbdWinner>
@@ -28,6 +34,13 @@
 </ng-template>
 
 <div class="bracket-container" *ngIf="bracket">
+  <ng-container *ngIf="!isByeRound">
+    <div class="left-player">test</div>
+    <div class="right-player">tes</div>
+  </ng-container>
+</div>
+
+<!-- <div class="bracket-container" *ngIf="bracket">
   <ng-container *ngIf="!isByeRound">
     <div class="left-player">
       <ng-container *ngIf="leftDescendantBracket else leftPlayerName">
@@ -53,4 +66,4 @@
       </ng-container>
     </div>
   </div>
-</div>
+</div> -->

@@ -1,55 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Player } from 'src/app/models/player';
-import { FormGroup, FormControl } from '@angular/forms';
-import { TournamentService } from 'src/app/services/tournament.service';
+import { TournamentService } from 'src/app/lib/services/tournament.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { PlayerListComponent } from 'src/app/lib/components/player-list/player-list.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { shuffle } from 'src/app/helper/tournament';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  standalone: true,
+  imports: [
+    FormsModule,
+    CommonModule,
+    MatRadioModule,
+    MatCardModule,
+    MatFormFieldModule,
+    PlayerListComponent,
+    MatButtonModule,
+    MatInputModule,
+  ],
 })
-export class HomeComponent implements OnInit {
-  players: Player[] = [
-  ];
+export class HomeComponent {
+  players: Player[] = [];
   currentPlayerName: string = '';
   displayedColumns: string[] = ['name', 'actions'];
   numberOfPlayers: number = 0;
-  bracketType = 'single';
+  bracketType: string = 'single';
+  bracketSeed: string = 'random';
   canStartTournament: boolean = false;
 
-  constructor(private tournamentService: TournamentService) {
-
-  }
-
-  ngOnInit() {  
-  }
+  tournamentService = inject(TournamentService);
 
   addPlayer() {
-    //probably not the best way to do this
-    if(this.currentPlayerName.trim() === '' || this.currentPlayerName === null) {
+    const trimmedName = this.currentPlayerName.trim();
+    if (!trimmedName) {
       return;
     }
 
-    //check if player already exists
-    for(let i = 0; i < this.players.length; i++) {
-      if(this.players[i].name === this.currentPlayerName) {
-        return;
-      }
+    if (this.players.some((player) => player.name === trimmedName)) {
+      return;
     }
 
-    const newPlayers = [...this.players];
-    newPlayers.push(new Player(this.currentPlayerName));
-    this.players = newPlayers;
+    this.players = [
+      ...this.players,
+      new Player(trimmedName, this.players.length),
+    ];
     this.numberOfPlayers = this.players.length;
-
     this.currentPlayerName = '';
+    this.canStartTournament = this.numberOfPlayers >= 2;
 
-    if(this.numberOfPlayers >= 2) {
-      this.canStartTournament = true;
-    } 
+    console.log(this.players);
   }
 
-  removePlayer(player: Player) {  
+  removePlayer(player: Player) {
     const newPlayers = [...this.players];
     newPlayers.splice(newPlayers.indexOf(player), 1);
     this.players = newPlayers;
@@ -60,10 +70,14 @@ export class HomeComponent implements OnInit {
     this.numberOfPlayers = 0;
     this.canStartTournament = false;
   }
-  
-  generateBracket() {
-    this.tournamentService.determineGame(this.players, this.bracketType);
 
-    
+  generateTournament() {
+    if (this.bracketSeed === 'random') {
+      const randomizedPlayers = shuffle(this.players);
+
+      this.tournamentService.generateBracket(randomizedPlayers);
+    }
+
+    console.log('Generating tournament');
   }
 }

@@ -16,22 +16,23 @@ $column-round-width: var(--column-round-width, 200px);
   $default-grid-template: "left-player winner-area" 1fr
     "right-player winner-area" 1fr / auto $column-round-width;
   width: fit-content;
+  justify-content: center;
   display: grid;
   grid-template: var(--grid-template, $default-grid-template);
 
-  gap: 10px;
+  gap: 20px;
 
   align-items: center;
   justify-content: stretch;
   justify-items: var(--justify-items, end);
+
+  margin: 50px 0;
 
   .player-name {
     min-width: $column-round-width;
     padding: 5px;
     box-sizing: border-box;
     border: solid 2px black;
-
-    transition: 0.3s;
 
     &.selectable {
       cursor: pointer;
